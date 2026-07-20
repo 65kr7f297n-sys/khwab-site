@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khwab: A Slice of Heaven at The Sea Ranch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ocean: #1a3a4a;
+    --fog: #f4f1eb;
+    --driftwood: #b8925a;
+    --mist: #e8e4dc;
+    --deep: #0d2230;
+    --sand: #d4c9b0;
+    --text: #2a2a28;
+    --text-light: #6b6b68;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Jost', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--fog);
+    color: var(--text);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(26, 58, 74, 0.92);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: white;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--driftwood); font-style: italic; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.82);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--driftwood); }
+  .nav-book {
+    background: var(--driftwood);
+    color: white !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+  }
+  .nav-book:hover { background: #a07840 !important; color: white !important; }
+
+  /* HERO */
+  .hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('images/sunset-pelicans.jpg');
+    background-size: cover;
+    background-position: center 40%;
+    transform: scale(1.05);
+    animation: slowZoom 18s ease-out forwards;
+  }
+  @keyframes slowZoom {
+    from { transform: scale(1.05); }
+    to { transform: scale(1.0); }
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+      rgba(13,34,48,0.1) 0%,
+      rgba(13,34,48,0.08) 40%,
+      rgba(13,34,48,0.6) 100%);
+  }
+  .hero-content {
+    position: relative;
+    text-align: center;
+    color: white;
+    padding: 2rem;
+    animation: fadeUp 1.2s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--driftwood);
+    margin-bottom: 1.2rem;
+    animation: fadeUp 1.2s 0.2s ease both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', var(--serif);
+    font-size: clamp(2.4rem, 6.5vw, 5rem);
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+    animation: fadeUp 1.2s 0.3s ease both;
+  }
+  .hero-subtitle {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    font-weight: 300;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1.2s 0.45s ease both;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    font-size: 1.02rem;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 2.8rem;
+    animation: fadeUp 1.2s 0.55s ease both;
+  }
+  .hero-stats span { display: flex; align-items: center; gap: 0.4rem; }
+  .hero-stats .dot { color: var(--driftwood); }
+  .hero-cta {
+    display: inline-block;
+    background: var(--driftwood);
+    color: white;
+    padding: 1rem 2.8rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.25s, transform 0.2s;
+    animation: fadeUp 1.2s 0.65s ease both;
+  }
+  .hero-cta:hover { background: #a07840; transform: translateY(-2px); }
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    animation: fadeUp 1.2s 0.9s ease both;
+  }
+  .scroll-arrow {
+    width: 18px;
+    height: 18px;
+    animation: scrollBounce 1.8s infinite;
+  }
+  .scroll-arrow path {
+    stroke: rgba(255,255,255,0.7);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+
+  /* SECTIONS */
+  section { padding: 7rem 0; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
+  .section-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--driftwood);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ocean);
+    margin-bottom: 1.5rem;
+  }
+  .section-title em { font-style: normal; color: var(--driftwood); font-weight: 500; }
+
+  /* INTRO */
+  .intro { background: var(--fog); }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .intro-text p {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    margin-bottom: 1.2rem;
+  }
+  .intro-text p:last-child { margin-bottom: 0; }
+  .rating-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: var(--ocean);
+    color: white;
+    padding: 0.8rem 1.4rem;
+    border-radius: 2px;
+    margin-top: 2rem;
+  }
+  .rating-num {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+  .rating-info { font-size: 0.75rem; letter-spacing: 0.05em; opacity: 0.85; }
+  .stars { color: var(--driftwood); letter-spacing: 0.1em; font-size: 0.9rem; }
+  .intro-image {
+    position: relative;
+  }
+  .intro-image img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    display: block;
+  }
+  .intro-image-accent {
+    position: absolute;
+    bottom: -2rem;
+    left: -2rem;
+    width: 55%;
+    height: 200px;
+    object-fit: cover;
+    border: 5px solid var(--fog);
+  }
+
+  /* GALLERY */
+  .gallery { background: var(--deep); padding: 5rem 0; }
+  .gallery-header { text-align: center; margin-bottom: 3rem; }
+  .gallery-header .section-label { color: var(--driftwood); }
+  .gallery-header .section-title { color: white; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 280px 280px;
+    gap: 4px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .gallery-item { overflow: hidden; }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    display: block;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-item.tall { grid-row: span 2; }
+
+  /* HIGHLIGHTS */
+  .highlights { background: var(--mist); }
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .highlight-item {
+    padding: 3rem 2.5rem;
+    border-right: 1px solid var(--sand);
+  }
+  .highlight-item:last-child { border-right: none; }
+  .highlight-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .highlight-title {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--ocean);
+    margin-bottom: 0.6rem;
+  }
+  .highlight-desc {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  /* AMENITIES */
+  .amenities { background: var(--fog); }
+  .amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .amenity-card {
+    background: white;
+    padding: 1.6rem 1.4rem;
+    border-bottom: 2px solid var(--driftwood);
+  }
+  .amenity-icon { font-size: 1.5rem; margin-bottom: 0.6rem; display: block; }
+  .amenity-name {
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  /* LOCATION */
+  .location { background: var(--ocean); }
+  .location .section-label { color: var(--driftwood); }
+  .location .section-title { color: white; }
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .location-items { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .location-item {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+  .location-item-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    color: var(--driftwood);
+  }
+  .location-item-text .loc-title {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+  }
+  .location-item-text .loc-desc {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .location-image img {
+    width: 100%;
+    height: 460px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* BOOKING */
+  .booking { background: var(--fog); }
+  .booking-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .booking-intro p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.85;
+    margin-bottom: 1.2rem;
+  }
+  .host-block {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--fog);
+    border-radius: 4px;
+    padding: 1.5rem 1.7rem;
+    margin: 1.5rem 0;
+  }
+  .host-photo-frame {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 3px solid white;
+    cursor: pointer;
+    background: var(--mist);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .host-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 15%;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .host-photo-frame:hover .host-photo {
+    transform: scale(1.35);
+  }
+  .host-name {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--ocean);
+    margin-bottom: 0.15rem;
+  }
+  .host-bio {
+    font-size: 0.83rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  .booking-detail {    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--sand);
+  }
+  .booking-detail-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+  }
+  .booking-detail-row .label { color: var(--text-light); }
+  .booking-detail-row .value { font-weight: 400; color: var(--ocean); }
+  .booking-form {
+    background: white;
+    padding: 3rem;
+    border-top: 3px solid var(--driftwood);
+  }
+  .form-title {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--ocean);
+    margin-bottom: 0.4rem;
+  }
+  .form-subtitle {
+    color: var(--text-light);
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .form-group { margin-bottom: 1.2rem; display: flex; flex-direction: column; }
+  .form-group label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.4rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 300;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--sand);
+    background: var(--fog);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    border-radius: 0;
+    appearance: none;
+    width: 100%;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--ocean); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  #card-element {
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--sand);
+    background: var(--fog);
+    transition: border-color 0.2s;
+  }
+  .form-submit {
+    width: 100%;
+    background: var(--ocean);
+    color: white;
+    border: none;
+    padding: 1.1rem;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 1.2rem;
+    transition: background 0.25s, transform 0.15s;
+  }
+  .form-submit:hover { background: var(--deep); transform: translateY(-1px); }
+  .form-notice {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    text-align: center;
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+  #form-status {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.85rem;
+    display: none;
+    border-radius: 1px;
+  }
+  #form-status.success { background: #eaf3de; color: #3b6d11; display: block; }
+  #form-status.error { background: #fcebeb; color: #a32d2d; display: block; }
+
+  /* REVIEWS */
+  .reviews { background: var(--mist); }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .review-card {
+    background: white;
+    padding: 2rem;
+  }
+  .review-stars { color: var(--driftwood); font-size: 0.8rem; letter-spacing: 0.15em; margin-bottom: 1rem; }
+  .review-text {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+  }
+  .review-author { font-size: 0.75rem; letter-spacing: 0.12em; color: var(--text-light); text-transform: uppercase; }
+
+  /* FOOTER */
+  footer {
+    background: var(--deep);
+    color: rgba(255,255,255,0.65);
+    padding: 4rem 0 2.5rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand .nav-logo { display: block; margin-bottom: 1rem; font-size: 1.8rem; }
+  .footer-brand p { font-size: 0.85rem; line-height: 1.75; max-width: 280px; }
+  .footer-col h4 {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--driftwood);
+    margin-bottom: 1.2rem;
+  }
+  .footer-col p, .footer-col a {
+    display: block;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: white; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.35);
+  }
+  .footer-license {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .intro-grid, .location-grid, .booking-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+    .intro-image-accent { display: none; }
+    .highlights-grid { grid-template-columns: 1fr; }
+    .highlight-item { border-right: none; border-bottom: 1px solid var(--sand); }
+    .amenities-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item.tall { grid-row: span 1; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .booking-form { padding: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">khw<span>a</span>b</a>
+  <ul class="nav-links">
+    <li><a href="#about">The Home</a></li>
+    <li><a href="#amenities">Amenities</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#book" class="nav-book">Book Direct</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Sea Ranch, California</p>
+    <h1 class="hero-title">A Slice of Heaven</h1>
+    <p class="hero-subtitle">Where the Pacific sky meets the meadow, and every sunset is a revelation</p>
+    <div class="hero-stats">
+      <span>★ <span id="stat-rating-1">4.85</span> <span class="dot">·</span> <span id="stat-count-1">305</span> reviews</span>
+      <span><span class="dot">·</span> 2 bed · 2 bath</span>
+      <span><span class="dot">·</span> 4 guests</span>
+      <span><span class="dot">·</span> Superhost · 10 years</span>
+    </div>
+    <a href="#book" class="hero-cta">Reserve Direct &amp; Save</a>
+  </div>
+  <div class="hero-scroll">
+    <svg class="scroll-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9 2 L9 15 M3 9 L9 15 L15 9" />
+    </svg>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro" id="about">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="intro-text">
+        <p class="section-label">The Dream</p>
+        <h2 class="section-title">A tranquil retreat<br>on the <em>Pacific coast</em></h2>
+        <p>Welcome to Khwab (meaning dream), a 2-bedroom, 2-bath coastal haven nestled at the north end of The Sea Ranch. This is a place where spectacular sunsets unfold slowly beyond meadows dotted with grazing deer, where jackrabbits lope across the morning grass and sleek red fox catch your eye from the deck.</p>
+        <p>Every detail of this home has been curated for comfort and ease: smart lock entry, fiber-optic internet, a secluded hot tub under a canopy of stars, and a kitchen equipped for everything from a sunrise pour-over to a full feast after a day on the bluff trail.</p>
+        <p>This is not a rental. This is a restoration.</p>
+        <div class="rating-badge">
+          <span class="rating-num" id="stat-rating-2">4.85</span>
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="rating-info"><span id="stat-count-2">305</span> reviews · Guest Favorite · Superhost</div>
+          </div>
+        </div>
+      </div>
+      <div class="intro-image">
+        <img src="images/exterior.jpg" alt="Home exterior on the Sea Ranch bluff" loading="lazy">
+        <img class="intro-image-accent" src="images/hot-tub.jpg" alt="Private hot tub" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery">
+  <div class="gallery-header">
+    <p class="section-label">The Space</p>
+    <h2 class="section-title" style="color:white;">Every room,<br><em>a view</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item tall">
+      <img src="images/exterior.jpg" alt="Home exterior" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="images/master-bedroom.jpg" alt="Master bedroom" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="images/second-bedroom.jpg" alt="Second bedroom" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="images/hot-tub.jpg" alt="Hot tub" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="images/sunset-pelicans.jpg" alt="Sunset views" loading="lazy">
+    </div>
+  </div>
+  <p style="text-align:center; margin-top:2.5rem;">
+    <a href="https://www.airbnb.com/rooms/9344934" target="_blank" rel="noopener" style="color:var(--driftwood); font-size:0.85rem; letter-spacing:0.08em; text-decoration:none; border-bottom:1px solid var(--driftwood); padding-bottom:2px;">See all photos &amp; <span id="stat-count-4">305</span> reviews on Airbnb →</a>
+  </p>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section class="highlights">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 3.5rem;">
+      <p class="section-label">Why Khwab</p>
+      <h2 class="section-title">What makes this place<br><em>unforgettable</em></h2>
+    </div>
+    <div class="highlights-grid">
+      <div class="highlight-item">
+        <span class="highlight-icon">🌊</span>
+        <h3 class="highlight-title">Ocean views from the main rooms</h3>
+        <p class="highlight-desc">The living room, front deck, and master bedroom all face west across open meadows toward the Pacific. Every evening is a private sunset show. No two the same.</p>
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">♨️</span>
+        <h3 class="highlight-title">Private hot tub under the stars</h3>
+        <p class="highlight-desc">A wind-protected, secluded hot tub on the back deck awaits after your adventures. The Sea Ranch's dark skies make for extraordinary stargazing.</p>
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">🦌</span>
+        <h3 class="highlight-title">Wildlife at your doorstep</h3>
+        <p class="highlight-desc">Deer graze the meadow each morning. Red fox slink along the treeline. Jackrabbits bound past the front deck. Great blue heron meditate in the meadow grass, pelicans glide along the bluffs, and sea lions sun themselves on the rocks below. Bobcats pass through on occasion, too.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="amenities" id="amenities">
+  <div class="container">
+    <p class="section-label">Comforts</p>
+    <h2 class="section-title">Everything you need,<br><em>nothing you don't</em></h2>
+    <div class="amenities-grid">
+      <div class="amenity-card"><span class="amenity-icon">🔑</span><span class="amenity-name">Smart lock self check-in</span></div>
+      <div class="amenity-card"><span class="amenity-icon">🛁</span><span class="amenity-name">Hot tub (cleaned per stay)</span></div>
+      <div class="amenity-card"><span class="amenity-icon">🌊</span><span class="amenity-name">Ocean & golf course views</span></div>
+      <div class="amenity-card"><span class="amenity-icon">🍳</span><span class="amenity-name">Full kitchen, induction stove</span></div>
+      <div class="amenity-card"><span class="amenity-icon">📶</span><span class="amenity-name">Fiber-optic high speed WiFi</span></div>
+      <div class="amenity-card"><span class="amenity-icon">📺</span><span class="amenity-name">Smart TV + DirectTV</span></div>
+      <div class="amenity-card"><span class="amenity-icon">🔥</span><span class="amenity-name">Wood-burning fireplace</span></div>
+      <div class="amenity-card"><span class="amenity-icon">🐕</span><span class="amenity-name">Pet-friendly (1 dog ≤ 50 lbs)</span></div>
+      <div class="amenity-card"><span class="amenity-icon">🏊</span><span class="amenity-name">Rec center passes included</span></div>
+      <div class="amenity-card"><span class="amenity-icon">⛳</span><span class="amenity-name">Golf course steps away</span></div>
+      <div class="amenity-card"><span class="amenity-icon">🚿</span><span class="amenity-name">Linens & towels provided</span></div>
+      <div class="amenity-card"><span class="amenity-icon">🎲</span><span class="amenity-name">Books, games & puzzles</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location" id="location">
+  <div class="container">
+    <div class="location-grid">
+      <div>
+        <p class="section-label">Where to find us</p>
+        <h2 class="section-title">North end of<br><em>The Sea Ranch</em></h2>
+        <div class="location-items">
+          <div class="location-item">
+            <div class="location-item-icon">⟶</div>
+            <div class="location-item-text">
+              <p class="loc-title">Bluff Trail · 2 min walk</p>
+              <p class="loc-desc">Cross the meadow and you're on one of California's most stunning coastal trails. Walk for miles to secluded beaches.</p>
+            </div>
+          </div>
+          <div class="location-item">
+            <div class="location-item-icon">⟶</div>
+            <div class="location-item-text">
+              <p class="loc-title">Gualala · 5 min drive</p>
+              <p class="loc-desc">A charming seaside town with grocery stores, restaurants, and everything you need to stock up on arrival.</p>
+            </div>
+          </div>
+          <div class="location-item">
+            <div class="location-item-icon">⟶</div>
+            <div class="location-item-text">
+              <p class="loc-title">Del Mar Rec Center · short ride</p>
+              <p class="loc-desc">Heated ocean-view pool, spa, and tennis courts. Passes included with your stay.</p>
+            </div>
+          </div>
+          <div class="location-item">
+            <div class="location-item-icon">⟶</div>
+            <div class="location-item-text">
+              <p class="loc-title">Sea Ranch Golf Course · next door</p>
+              <p class="loc-desc">A scenic 9-hole course practically at your doorstep for golf enthusiasts.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="location-image">
+        <img src="images/sunset-pelicans.jpg" alt="Sea Ranch coastline at sunset" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div style="text-align:center;">
+      <p class="section-label">Guest voices</p>
+      <h2 class="section-title">What people say<br>about <em>Khwab</em></h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The sunsets were unlike anything we'd ever seen. We sat on the deck every evening with wine and just watched the sky do its thing. We'll be back."</p>
+        <span class="review-author">Guest, November 2024</span>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Anu is the most responsive host we've ever had. The house was spotless, the hot tub was perfect, and waking up to deer in the meadow made our whole trip."</p>
+        <span class="review-author">Guest, September 2024</span>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"We came here to disconnect and found ourselves not wanting to leave. The bluff trail is two minutes away. The night sky is breathtaking. Truly a dream."</p>
+        <span class="review-author">Guest, August 2024</span>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:2.5rem; font-size:0.85rem;">
+      <a href="https://www.airbnb.com/rooms/9344934/reviews" target="_blank" rel="noopener" style="color:var(--text-light); text-decoration:none; border-bottom:1px solid var(--mist);">
+        <span id="stat-rating-3">4.85</span> stars · <span id="stat-count-3">305</span> verified reviews on Airbnb
+      </a> · <strong style="color:var(--ocean);">Guest Favorite</strong>
+    </p>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="book">
+  <div class="container">
+    <div class="booking-wrapper">
+      <div class="booking-intro">
+        <p class="section-label">Reserve Direct</p>
+        <h2 class="section-title">Book without<br>the <em>middleman</em></h2>
+        <p>When you book directly with us, you get the same trusted home, the same Superhost care, without Airbnb's platform fees added to your total.</p>
+        <p>Every direct booking starts as an inquiry. We'll correspond by email to confirm dates and get to know each other before anything is booked.</p>
+
+        <div class="host-block">
+          <div class="host-photo-frame">
+            <img class="host-photo" src="images/host-photo.jpg" alt="Anu, your host">
+          </div>
+          <div>
+            <div class="host-name">Meet Anu, your host</div>
+            <div class="host-bio">Sea Ranch Superhost with 300+ reviews. I love sharing this magical coastline and my cozy home with guests.</div>
+          </div>
+        </div>
+
+        <div style="background:white; border:1px solid var(--mist); border-radius:4px; padding:1.2rem 1.4rem; margin:1.5rem 0; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+          <div>
+            <div style="font-size:0.95rem; color:var(--ocean); font-weight:500; margin-bottom:0.2rem;">Check availability first</div>
+            <div style="font-size:0.82rem; color:var(--text-light);">Our live calendar is on Airbnb. Confirm your dates are open before sending an inquiry.</div>
+          </div>
+          <a href="https://www.airbnb.com/rooms/9344934" target="_blank" rel="noopener" style="flex-shrink:0; font-size:0.8rem; letter-spacing:0.06em; text-transform:uppercase; color:white; background:var(--ocean); padding:0.65rem 1.2rem; border-radius:3px; text-decoration:none; white-space:nowrap;">View Calendar →</a>
+        </div>
+
+        <div class="booking-detail">
+          <div class="booking-detail-row">
+            <span class="label">Check-in</span>
+            <span class="value">After 4:00 PM</span>
+          </div>
+          <div class="booking-detail-row">
+            <span class="label">Check-out</span>
+            <span class="value">Before 11:00 AM</span>
+          </div>
+          <div class="booking-detail-row">
+            <span class="label">Guests</span>
+            <span class="value">Up to 4</span>
+          </div>
+          <div class="booking-detail-row">
+            <span class="label">Pets</span>
+            <span class="value">1 dog ≤ 50 lbs ($75 fee)</span>
+          </div>
+          <div class="booking-detail-row">
+            <span class="label">Damage Deposit</span>
+            <span class="value">$350, refundable</span>
+          </div>
+          <div class="booking-detail-row">
+            <span class="label">Vacation Rental License</span>
+            <span class="value">LIC25-0132</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-form">
+        <h3 class="form-title">Request a Reservation</h3>
+        <p class="form-subtitle">This is an inquiry, not an instant booking. We'll email you back to confirm details before anything is finalized.</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="first-name" placeholder="Maya" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" id="last-name" placeholder="Rivera" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="email" placeholder="maya@example.com" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Check-in Date</label>
+            <input type="date" id="checkin" required>
+          </div>
+          <div class="form-group">
+            <label>Check-out Date</label>
+            <input type="date" id="checkout" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Number of Guests</label>
+            <select id="guests">
+              <option>1 guest</option>
+              <option>2 guests</option>
+              <option>3 guests</option>
+              <option>4 guests</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Bringing a pet?</label>
+            <select id="pet">
+              <option>No pets</option>
+              <option>Yes, 1 dog (≤ 50 lbs)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Link to your Airbnb or VRBO guest profile</label>
+          <input type="text" id="guest-reviews" placeholder="e.g. airbnb.com/users/show/12345678" required>
+        </div>
+        <p style="font-size:0.78rem; color:var(--text-light); line-height:1.6; margin-top:-0.8rem; margin-bottom:1.2rem;">
+          Since we're not booking through a platform, this helps us get to know you as a guest before confirming. If you don't have a profile link, just mention that in your message.
+        </p>
+        <div class="form-group">
+          <label>Tell us about your trip</label>
+          <textarea id="message" placeholder="Who's coming, the occasion, anything we should know..."></textarea>
+        </div>
+
+        <div id="form-status"></div>
+
+        <button class="form-submit" onclick="submitInquiry()">Send Reservation Request →</button>
+        <p class="form-notice">This is an inquiry only. No payment is collected here. We'll email you back to confirm dates and next steps. Your information is never shared.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">khw<span>a</span>b</a>
+        <p>A tranquil 2-bed, 2-bath retreat on the Pacific coast at The Sea Ranch, California. 10-year Superhost. Guest Favorite. A dream made real.</p>
+      </div>
+      <div class="footer-col">
+        <h4>The Home</h4>
+        <a href="#about">About Khwab</a>
+        <a href="#amenities">Amenities</a>
+        <a href="#location">Location</a>
+        <a href="#reviews">Reviews</a>
+      </div>
+      <div class="footer-col">
+        <h4>Book Direct</h4>
+        <a href="#book">Reserve Now</a>
+        <p>Check-in: After 4:00 PM</p>
+        <p>Check-out: Before 11:00 AM</p>
+        <p>Lic: LIC25-0132 · PMR25-0002</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Khwab at The Sea Ranch · All rights reserved</span>
+      <span class="footer-license">Vacation Rental License LIC25-0132</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── UPDATE YOUR AIRBNB STATS HERE — this is the only place you need to edit ──
+  const AIRBNB_STATS = {
+    rating: '4.85',
+    reviewCount: '300+'
+  };
+  // ── UPDATE YOUR BOOKING INQUIRY EMAIL HERE ──
+  const BOOKING_EMAIL = 'anu@khwab.com';
+  document.querySelectorAll('[id^="stat-rating-"]').forEach(el => el.textContent = AIRBNB_STATS.rating);
+  document.querySelectorAll('[id^="stat-count-"]').forEach(el => el.textContent = AIRBNB_STATS.reviewCount);
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('checkin').min = today;
+  document.getElementById('checkout').min = today;
+  document.getElementById('checkin').addEventListener('change', function() {
+    document.getElementById('checkout').min = this.value;
+  });
+
+  function submitInquiry() {
+    const firstName = document.getElementById('first-name').value.trim();
+    const lastName = document.getElementById('last-name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const checkin = document.getElementById('checkin').value;
+    const checkout = document.getElementById('checkout').value;
+    const status = document.getElementById('form-status');
+
+    if (!firstName || !lastName || !email || !checkin || !checkout) {
+      status.className = 'error';
+      status.textContent = 'Please fill in all required fields.';
+      return;
+    }
+    if (new Date(checkout) <= new Date(checkin)) {
+      status.className = 'error';
+      status.textContent = 'Check-out must be after check-in.';
+      return;
+    }
+
+    const guestReviews = document.getElementById('guest-reviews').value.trim();
+    if (!guestReviews) {
+      status.className = 'error';
+      status.textContent = 'Please share a link to your Airbnb or VRBO guest profile, or mention in the message why you don\'t have one.';
+      return;
+    }
+
+    const guests = document.getElementById('guests').value;
+    const pet = document.getElementById('pet').value;
+    const message = document.getElementById('message').value;
+
+    const subject = encodeURIComponent(`Booking Request: ${checkin} to ${checkout}`);
+    const body = encodeURIComponent(
+      `Name: ${firstName} ${lastName}\nEmail: ${email}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}\nPet: ${pet}\nGuest review profile: ${guestReviews}\n\nMessage:\n${message}`
+    );
+
+    window.location.href = `mailto:${BOOKING_EMAIL}?subject=${subject}&body=${body}`;
+
+    status.className = 'success';
+    status.textContent = '✓ Your email app should open now. We\'ll review your request and get back to you personally to confirm dates.';
+  }
+</script>
+</body>
+</html>
