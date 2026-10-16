@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="apple-mobile-web-app-title" content="Turnovers">
+<title>Sea Ranch Turnovers</title>
+<style>
+  :root {
+    --bg: #f6f4ef; --card: #ffffff; --ink: #1f2a30; --muted: #6b7479; --line: #e3dfd6;
+    --sea: #2f6f7e; --sea-soft: #dcebee; --clean: #c7782e; --clean-soft: #f6e6d3;
+    --red: #b8322a; --red-soft: #f7dcd9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141a1d; --card: #1d2529; --ink: #e8ecee; --muted: #9aa5ab; --line: #2e383d;
+      --sea: #7fbccb; --sea-soft: #23383e; --clean: #e7a560; --clean-soft: #3d2e1e;
+      --red: #f08077; --red-soft: #45221f;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 20px 16px 48px; }
+  h1 { font-size: 1.5rem; margin: 0 0 2px; }
+  h2 { font-size: 1.05rem; margin: 28px 0 10px; }
+  .sub { color: var(--muted); font-size: .9rem; margin: 0; }
+  .err { color: var(--red); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; }
+  .next { border-left: 5px solid var(--clean); }
+  .label { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .big { font-size: 1.3rem; font-weight: 650; margin: 2px 0; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .when { font-weight: 600; }
+  .note { color: var(--muted); font-size: .9rem; }
+  .flag { display: inline-block; background: var(--red-soft); color: var(--red); font-weight: 700;
+    font-size: .75rem; padding: 2px 8px; border-radius: 99px; letter-spacing: .04em; }
+  .empty { color: var(--muted); }
+  .calhead { display: flex; justify-content: space-between; align-items: center; margin: 28px 0 10px; }
+  .calhead h2 { margin: 0; }
+  .calhead button { background: var(--card); color: var(--ink); border: 1px solid var(--line);
+    border-radius: 10px; width: 40px; height: 36px; font-size: 1.1rem; cursor: pointer; }
+  .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .dow { text-align: center; font-size: .75rem; color: var(--muted); padding-bottom: 2px; }
+  .day { aspect-ratio: 1; border-radius: 9px; background: var(--card); border: 1px solid var(--line);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: .9rem; position: relative; }
+  .day.blank { background: transparent; border: none; }
+  .day.stay { background: var(--sea-soft); border-color: transparent; }
+  .day.out { background: var(--clean-soft); border-color: var(--clean); font-weight: 700; }
+  .day.same { background: var(--red-soft); border-color: var(--red); font-weight: 700; }
+  .day.today { outline: 2px solid var(--ink); outline-offset: -2px; }
+  .day small { font-size: .6rem; line-height: 1; margin-top: 2px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: .82rem; color: var(--muted); }
+  .sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 4px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sea Ranch turnovers</h1>
+  <p class="sub" id="updated">Loading…</p>
+
+  <h2>Next cleaning</h2>
+  <div id="next"></div>
+
+  <h2>Coming up</h2>
+  <div id="list"></div>
+
+  <div class="calhead">
+    <button id="prev" aria-label="Previous month">‹</button>
+    <h2 id="month"></h2>
+    <button id="nextm" aria-label="Next month">›</button>
+  </div>
+  <div class="grid" id="cal"></div>
+  <div class="legend">
+    <span><span class="sw" style="background:var(--clean-soft);border:1px solid var(--clean)"></span>Checkout = cleaning day</span>
+    <span><span class="sw" style="background:var(--red-soft);border:1px solid var(--red)"></span>Same-day turnover</span>
+    <span><span class="sw" style="background:var(--sea-soft)"></span>Guests staying</span>
+  </div>
+</main>
+
+<script>
+const DAY = 86400000;
+const pd = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const key = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const fmt = (d, o) => d.toLocaleDateString("en-US", o);
+const t0 = new Date(); const today = new Date(t0.getFullYear(), t0.getMonth(), t0.getDate());
+const todayKey = key(today);
+let bookings = [];
+let view = new Date(today.getFullYear(), today.getMonth(), 1);
+
+function relDay(d) {
+  const n = Math.round((d - today) / DAY);
+  if (n === 0) return "Today";
+  if (n === 1) return "Tomorrow";
+  return fmt(d, { weekday: "long" });
+}
+
+function turnovers() {
+  return bookings.filter(b => b.out >= todayKey).map(b => {
+    const next = bookings.find(x => x.in >= b.out);
+    return { out: b.out, next: next ? next.in : null, same: !!next && next.in === b.out };
+  });
+}
+
+function renderTop() {
+  const t = turnovers();
+  const nextEl = document.getElementById("next"), listEl = document.getElementById("list");
+  if (!t.length) {
+    nextEl.innerHTML = '<div class="card empty">No upcoming checkouts right now.</div>';
+    listEl.innerHTML = "";
+    return;
+  }
+  const arrival = x => x.same
+    ? '<span class="flag">SAME-DAY</span> <span class="note">next guests arrive the same afternoon</span>'
+    : x.next ? `<span class="note">Next guests arrive ${fmt(pd(x.next), { weekday: "short", month: "short", day: "numeric" })}</span>`
+             : '<span class="note">No next booking yet</span>';
+  const f = t[0], fd = pd(f.out);
+  nextEl.innerHTML = `<div class="card next">
+      <div class="label">${relDay(fd)}</div>
+      <div class="big">${fmt(fd, { weekday: "long", month: "long", day: "numeric" })}</div>
+      ${arrival(f)}
+    </div>`;
+  listEl.innerHTML = t.slice(1, 8).map(x => `<div class="card">
+      <div class="row"><span class="when">${fmt(pd(x.out), { weekday: "short", month: "short", day: "numeric" })}</span>${x.same ? '<span class="flag">SAME-DAY</span>' : ""}</div>
+      ${x.same ? "" : arrival(x)}
+    </div>`).join("") || '<div class="card empty">Nothing else booked yet.</div>';
+}
+
+function renderCalendar() {
+  document.getElementById("month").textContent = fmt(view, { month: "long", year: "numeric" });
+  const cal = document.getElementById("cal");
+  let html = ["S", "M", "T", "W", "T", "F", "S"].map(d => `<div class="dow">${d}</div>`).join("");
+  for (let i = 0; i < view.getDay(); i++) html += '<div class="day blank"></div>';
+  const days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+  for (let n = 1; n <= days; n++) {
+    const k = key(new Date(view.getFullYear(), view.getMonth(), n));
+    const out = bookings.some(b => b.out === k), inn = bookings.some(b => b.in === k);
+    const stay = bookings.some(b => b.in <= k && k < b.out);
+    let cls = "day", tag = "";
+    if (out && inn) { cls += " same"; tag = "<small>turn</small>"; }
+    else if (out) { cls += " out"; tag = "<small>clean</small>"; }
+    else if (stay) cls += " stay";
+    if (k === todayKey) cls += " today";
+    html += `<div class="${cls}">${n}${tag}</div>`;
+  }
+  cal.innerHTML = html;
+}
+
+document.getElementById("prev").onclick = () => { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCalendar(); };
+document.getElementById("nextm").onclick = () => { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCalendar(); };
+
+fetch("bookings.json?t=" + Date.now())
+  .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+  .then(data => {
+    bookings = (data.bookings || []).slice().sort((a, b) => a.in.localeCompare(b.in));
+    const u = data.updated ? new Date(data.updated) : null;
+    document.getElementById("updated").textContent = "Updates from Airbnb every hour" +
+      (u ? ` · last change ${fmt(u, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}` : "");
+    renderTop(); renderCalendar();
+  })
+  .catch(() => {
+    document.getElementById("updated").innerHTML = '<span class="err">Calendar isn\'t ready yet. Check back soon.</span>';
+    renderCalendar();
+  });
+</script>
+</body>
+</html>
